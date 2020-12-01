@@ -1,0 +1,11 @@
+body html {
+    background-color: black;
+}
+
+.img-card-top {
+    width: 100%;
+}
+
+.card {
+    margin-left: 5px;
+}

@@ -1,22 +1,22 @@
 $(document).ready(() => {
     "use strict"
 
-
+    $("body").css({backgroundColor:"black"})
     const getApi = 'https://winter-knotty-cereal.glitch.me/movies';
 
     $("#loading").show();
-    $("#searchMovie").hide();
+    $("#movieButton").hide();
 
 
     //display form and movie list after 1.5 sec//
    setTimeout(function() {
        console.log(getMovies());
        $("#loading").hide();
-       $("#searchMovie").show();
+       // $("#searchMovie").show();
        getMovies();
 
 
-   },1500);
+   },3000);
 
    // get list data//
     const getMovies = () => fetch(getApi)
@@ -27,35 +27,67 @@ $(document).ready(() => {
             let displayHTML = ""
            movies.forEach(movie => {
                console.log(movie);
-               displayHTML += `  
+               displayHTML += `
+                    
+                        <div class="col-3">
                            <div class="card" style="width: 18rem;">
-                            <img src=${movie.poster} class="card-img-top">
-                                <div class="card-body">
+                            <img src=${movie.poster} class="card-img-top" style="height:22rem;">
+                                <div class="card-body" style="height: 12rem;">
                                 <h4 class="card-title">${movie.title}</h4> 
                                 <p>Rating: ${movie.rating}</p>
                                 <p>Genre: ${movie.genre}</p>
-                                
+                                <p>${movie.year} </p>
                                 </div>                
-                            </div>`
+                            </div>
+                        </div>`
+
+
            });
-            $("#movieHere").html(displayHTML);
+            $("#movieSection").html(displayHTML);
+            $("#loading").hide();
+            $("#movieButton").show();
+
         }))
         .catch(console.error)
 
 
-
-
-
-    // $("#searchMovie").on("submit", (e) => {
+    // $(".movieInfo").on("submit", function(e) {
     //     e.preventDefault();
-    //     let searchInput = ($("#movieInput").val());
-    //     console.log(getMovies(searchInput));;
+    //     const newMovie = $(".movieInfo").val();
+    //     const options = {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify(newMovie)
+    //     };
+    //     fetch('/movies',options)
+    //         .then(res => res.json())
+    //         .then(function(newMovie){
+    //             console.log(newMovie);
+    //         })
+    //         .catch(console.error);
+    //
+    //     console.log(newMovie);
     // });
 
+    const newMovie = $("#addNewMovie");
 
+    newMovie.on("submit",function(e){
+        e.preventDefault();
 
+        const movieData = new movieData(this);
 
+        fetch(`${getApi}`,{
+            method: 'POST',
+            body: JSON.stringify(movieData),
 
+        }).then(function (response) {
+            return response.text()
+        }).then(function (text){
+            console.log(text);
+        })
+    });
 
 });
 
