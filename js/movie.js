@@ -69,7 +69,6 @@ $(document).ready(() => {
     newMovie.on("submit",function(e){
         e.preventDefault();
         const movieData = new movieData(this);
-
         fetch(`${getApi}`,{
             method: 'POST',
             body: JSON.stringify(movieData),
