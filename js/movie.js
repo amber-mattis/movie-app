@@ -1,11 +1,11 @@
 $(document).ready(() => {
     "use strict"
 
-    $("body").css({backgroundColor:"black"})
+
     const getApi = 'https://winter-knotty-cereal.glitch.me/movies';
 
     $("#loading").show();
-    $("#movieButton").hide();
+    $("#main-title, #movieButton").hide();
 
 
     //display form and movie list after 3 sec//
@@ -18,27 +18,27 @@ $(document).ready(() => {
     const getMovies = () => fetch(getApi)
         .then(res => res.json()
         .then(movies => {
-
             let displayHTML = ""
            movies.forEach(movie => {
                console.log(movie);
                displayHTML += `
-                    
                         <div class="col-3">
-                           <div class="card" style="width: 18rem;">
+                           <div class="card" style="width: 18rem; border: none; margin: 10px">
                             <img src=${movie.poster} class="card-img-top" style="height:22rem;">
-                                <div class="card-body" style="height: 12rem;">
+                                <div class="card-body" style="height: 18rem; font-size: 12px; color: white; background: black">
                                 <h4 class="card-title">${movie.title}</h4> 
                                 <p>Rating: ${movie.rating}</p>
                                 <p>Genre: ${movie.genre}</p>
-                                <p>${movie.year} </p>
+                                <p>${movie.year}</p>
+                                <p>${movie.plot}</p>
                                 </div>                
                             </div>
                         </div>`
            });
+            $("#main-title, #movieButton").show();
             $("#movieSection").html(displayHTML);
             $("#loading").hide();
-            $("#movieButton").show();
+
 
         }))
         .catch(console.error)
@@ -80,5 +80,9 @@ $(document).ready(() => {
         })
     });
 
+    $("body").css("background", "black")
+
 });
+
+
 
