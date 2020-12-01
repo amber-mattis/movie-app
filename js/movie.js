@@ -8,20 +8,15 @@ $(document).ready(() => {
     $("#movieButton").hide();
 
 
-    //display form and movie list after 1.5 sec//
+    //display form and movie list after 3 sec//
    setTimeout(function() {
        console.log(getMovies());
-       $("#loading").hide();
-       // $("#searchMovie").show();
        getMovies();
-
-
    },3000);
 
    // get list data//
     const getMovies = () => fetch(getApi)
         .then(res => res.json()
-
         .then(movies => {
 
             let displayHTML = ""
@@ -40,8 +35,6 @@ $(document).ready(() => {
                                 </div>                
                             </div>
                         </div>`
-
-
            });
             $("#movieSection").html(displayHTML);
             $("#loading").hide();
@@ -75,13 +68,11 @@ $(document).ready(() => {
 
     newMovie.on("submit",function(e){
         e.preventDefault();
-
         const movieData = new movieData(this);
 
         fetch(`${getApi}`,{
             method: 'POST',
             body: JSON.stringify(movieData),
-
         }).then(function (response) {
             return response.text()
         }).then(function (text){
